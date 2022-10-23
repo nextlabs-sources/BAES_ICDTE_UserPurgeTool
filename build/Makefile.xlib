@@ -1,0 +1,59 @@
+
+#
+# Check for errors
+#
+
+ifeq ($(NLBUILDROOT),)
+  $(error ERROR: NLBUILDROOT undefined)
+endif
+
+ifeq ($(NLEXTERNALDIR),)
+  $(error ERROR: NLEXTERNALDIR undefined)
+endif
+
+ifeq ($(NLEXTERNALDIR2),)
+  $(error ERROR: NLEXTERNALDIR2 undefined)
+endif
+
+ifeq ($(XLIB_FATE_BIN_ZIP_FILE),)
+  $(error ERROR: XLIB_FATE_BIN_ZIP_FILE undefined)
+endif
+
+#
+# Default values
+#
+
+ifneq ($(BUILDTYPE), debug)
+	BUILDTYPE=release
+endif
+
+XLIB_DIR=$(NLBUILDROOT)/xlib
+XLIB_BIN64_DIR=$(XLIB_DIR)/release_win_x64
+XLIB_DOTNET_DIR=$(XLIB_DIR)/release_dotnet
+
+$(info )
+$(info ==========================================================================)
+$(info BUILDTYPE=$(BUILDTYPE))
+$(info XLIB_FATE_BIN_ZIP_FILE=$(XLIB_FATE_BIN_ZIP_FILE))
+$(info NLBUILDROOT=$(NLBUILDROOT))
+$(info NLEXTERNALDIR=$(NLEXTERNALDIR))
+$(info NLEXTERNALDIR2=$(NLEXTERNALDIR2))
+$(info ==========================================================================)
+
+
+.PHONY: all
+all: prepare_fate_x64 prepare_fate_dotnet
+
+.PHONY: prepare_fate_x64
+prepare_fate_x64:
+	mkdir -p $(XLIB_BIN64_DIR)
+	unzip -jo "$(XLIB_FATE_BIN_ZIP_FILE)" 'bin/release_win_x64/cesdk.dll' -d $(XLIB_BIN64_DIR)
+
+.PHONY: prepare_fate_dotnet
+prepare_fate_dotnet:
+	mkdir -p $(XLIB_DOTNET_DIR)
+	unzip -jo "$(XLIB_FATE_BIN_ZIP_FILE)" 'bin/release_dotnet2/NextLabs.CSCInvoke.dll' -d $(XLIB_DOTNET_DIR)
+
+.PHONY: clean
+clean:
+	rm -rf $(XLIB_DIR)

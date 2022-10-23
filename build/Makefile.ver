@@ -1,0 +1,15 @@
+# Produce version information
+
+#
+
+# Description:
+
+#	This file should be included in top-level Makefile 
+
+# http://sharepoint/sites/support/release/Lists/Current%20Releases/AllItems.aspx
+
+VERSION_PRODUCT     = PurgeUser Tool
+VERSION_MAJOR       = 1
+VERSION_MINOR       = 0
+VERSION_MAINTENANCE = 0
+VERSION_PATCH       = 0
